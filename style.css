@@ -1,0 +1,44 @@
+/* --- Chart Container --- */
+.bar-row {
+    display: flex;
+    align-items: center;
+    margin: 8px 0;
+}
+
+.bar-label {
+    width: 70px;
+    text-transform: capitalize;
+    font-weight: bold;
+}
+
+/* --- THE CRUCIAL FIX: Track with a height and background --- */
+.bar-track {
+    flex: 1;
+    height: 24px;              /* <--- THIS is what makes the bar visible */
+    background-color: #d3d3d3;  /* Light grey track so you can see it on white background */
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 0 10px;
+}
+
+.bar-fill {
+    height: 100%;              /* Now 100% of 24px = 24px tall! */
+    width: 0%;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+    display: block;            /* Ensures proper rendering */
+}
+
+.bar-votes {
+    min-width: 40px;
+    text-align: right;
+    font-weight: bold;
+}
+
+/* Color classes for the bars */
+.bar-fill.black { background-color: #555; }
+.bar-fill.white { background-color: #f0f0f0; } /* Changed so it's visible on light grey */
+.bar-fill.blue { background-color: #4a90e2; }
+.bar-fill.green { background-color: #2ecc71; }
+.bar-fill.red { background-color: #e74c3c; }
+.bar-fill.pink { background-color: #ff6b81; }
