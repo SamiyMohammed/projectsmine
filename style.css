@@ -363,3 +363,60 @@ button:hover {
         transition: none;
     }
 }
+/* movie search results grid */
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.movie-card {
+    background: var(--bg);
+    border: 1px solid var(--panel-edge);
+    border-radius: var(--radius);
+    padding: 12px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.movie-poster {
+    width: 100%;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    object-fit: cover;
+    aspect-ratio: 2 / 3; /* typical poster ratio */
+    background: var(--track);
+}
+
+.movie-poster.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    font-size: 0.8rem;
+}
+
+.movie-title {
+    font-size: 0.95rem;
+    margin: 0 0 4px;
+    color: var(--text);
+    font-family: inherit;
+}
+
+.movie-meta {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin: 0 0 4px;
+}
+
+.movie-price {
+    font-size: 0.85rem;
+    color: var(--accent);
+    font-weight: bold;
+    margin: 0;
+}
+#weatherForm {
+    margin-bottom: 20px;
+}
