@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    
     <header class="top">
         <h1>This is my homepage with my projects</h1>
         <img src="image.webp" height="20" width="200" alt="this image contains">
@@ -99,9 +100,83 @@
                 <div id="chartContainer"></div>
             </div>
         </section>
+        <section class="panel" id="weatherPanel">
+    <h2>Local Weather</h2>
+    <p>Get the current weather for any city (no API key needed).</p>
+
+    <form id="weatherForm" class="inline-form">
+        <label for="cityInput">City name</label>
+        <input type="text" id="cityInput" placeholder="e.g. London, Tokyo" required>
+        <button type="submit">Get Weather</button>
+    </form>
+
+    <div id="weatherOutput" hidden>
+        <div class="stats">
+            <div class="stat">
+                <span id="weatherTemp">--°C</span>
+                <small>temperature</small>
+            </div>
+            <div class="stat">
+                <span id="weatherCondition">--</span>
+                <small>condition</small>
+            </div>
+            <div class="stat">
+                <span id="weatherCity">--</span>
+                <small>city</small>
+            </div>
+        </div>
+    </div>
+</section>
     </main>
 
 <script>
+    // ---------- weather (Open-Meteo) ----------
+const weatherForm = document.getElementById('weatherForm');
+const cityInput = document.getElementById('cityInput');
+const weatherOutput = document.getElementById('weatherOutput');
+
+// Map weather codes to readable text (simplified)
+const weatherCodes = {
+    0: 'Clear sky', 1: 'Mainly clear', 2: 'Partly cloudy', 3: 'Overcast',
+    45: 'Fog', 48: 'Rime fog', 51: 'Light drizzle', 53: 'Drizzle',
+    55: 'Dense drizzle', 61: 'Slight rain', 63: 'Rain', 65: 'Heavy rain',
+    71: 'Slight snow', 73: 'Snow', 75: 'Heavy snow', 80: 'Rain showers',
+    95: 'Thunderstorm'
+};
+
+async function getWeather(city) {
+    // 1. Geocode the city name to get latitude/longitude
+    const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1`);
+    const geoData = await geoRes.json();
+
+    if (!geoData.results || geoData.results.length === 0) {
+        alert('City not found. Please try another name.');
+        return;
+    }
+
+    const { latitude, longitude, name, country } = geoData.results[0];
+
+    // 2. Fetch current weather using coordinates
+    const weatherRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,weather_code`);
+    const weatherData = await weatherRes.json();
+
+    const current = weatherData.current;
+    const temp = current.temperature_2m;
+    const code = current.weather_code;
+    const condition = weatherCodes[code] || 'Unknown';
+
+    // 3. Update the UI
+    document.getElementById('weatherTemp').textContent = `${temp}°C`;
+    document.getElementById('weatherCondition').textContent = condition;
+    document.getElementById('weatherCity').textContent = `${name}, ${country}`;
+    weatherOutput.hidden = false;
+}
+
+weatherForm.addEventListener('submit', function (e) {
+    e.preventDefault(); // stop page reload
+    const city = cityInput.value.trim();
+    if (city) getWeather(city);
+});
 // ---------- file scanner ----------
 
 // grabbing all the elements i need up front so i'm not calling getElementById everywhere
@@ -341,6 +416,7 @@ document.getElementById('voteForm').addEventListener('submit', function (e) {
 
 // draw the chart as soon as the page loads
 renderResults();
+    
 </script>
 </body>
 </html>
