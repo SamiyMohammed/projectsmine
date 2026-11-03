@@ -127,9 +127,71 @@
         </div>
     </div>
 </section>
+        <section class="panel" id="moviePanel">
+    <h2>Movie Search</h2>
+    <p>Search for movies using the free iTunes API.</p>
+
+    <form id="movieForm" class="inline-form">
+        <label for="movieInput">Movie title</label>
+        <input type="text" id="movieInput" placeholder="e.g. Inception, The Matrix" required>
+        <button type="submit">Search</button>
+    </form>
+
+    <div id="movieResults" class="movie-grid"></div>
+</section>
     </main>
 
 <script>
+    // ---------- movie search (iTunes API) ----------
+const movieForm = document.getElementById('movieForm');
+const movieInput = document.getElementById('movieInput');
+const movieResults = document.getElementById('movieResults');
+
+async function searchMovies(query) {
+    // The iTunes Search API endpoint (media=movie)
+    const url = `https://itunes.apple.com/search?term=${encodeURIComponent(query)}&media=movie&limit=10`;
+
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+
+        movieResults.innerHTML = ''; // clear previous results
+
+        if (!data.results || data.results.length === 0) {
+            movieResults.innerHTML = '<p class="empty">No movies found. Try a different title.</p>';
+            return;
+        }
+
+        // Build a card for each movie
+        data.results.forEach(movie => {
+            const card = document.createElement('div');
+            card.className = 'movie-card';
+
+            // Use artwork if available, else a placeholder
+            const imgSrc = movie.artworkUrl100 ? movie.artworkUrl100.replace('100x100bb', '200x200bb') : '';
+            const poster = imgSrc
+                ? `<img src="${imgSrc}" alt="${movie.trackName}" class="movie-poster">`
+                : '<div class="movie-poster placeholder">No Poster</div>';
+
+            card.innerHTML = `
+                ${poster}
+                <h3 class="movie-title">${movie.trackName || 'Unknown Title'}</h3>
+                <p class="movie-meta">${movie.releaseDate ? movie.releaseDate.split('-')[0] : 'N/A'} • ${movie.primaryGenreName || 'Movie'}</p>
+                <p class="movie-price">${movie.trackPrice ? '$' + movie.trackPrice : 'Price N/A'}</p>
+            `;
+            movieResults.appendChild(card);
+        });
+    } catch (err) {
+        movieResults.innerHTML = '<p class="empty">Something went wrong. Please try again.</p>';
+        console.error(err);
+    }
+}
+
+movieForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const query = movieInput.value.trim();
+    if (query) searchMovies(query);
+});
     // ---------- weather (Open-Meteo) ----------
 const weatherForm = document.getElementById('weatherForm');
 const cityInput = document.getElementById('cityInput');
