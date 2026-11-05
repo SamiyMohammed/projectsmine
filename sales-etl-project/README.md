@@ -16,6 +16,10 @@ An end-to-end project that generates messy sales transaction data, cleans it wit
 
 This creates `data/sales.db` and `data/sales.csv`, and prints a data quality report showing how many rows were cleaned.
 
+## Dashboard Preview
+
+preview
+
 ## Key Findings
 
 - Laptops generate the most revenue by a wide margin, followed by monitors.
