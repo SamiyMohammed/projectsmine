@@ -18,7 +18,7 @@ This creates `data/sales.db` and `data/sales.csv`, and prints a data quality rep
 
 ## Dashboard Preview
 
-preview
+![Dashboard](dashboard.png)
 
 ## Key Findings
 
