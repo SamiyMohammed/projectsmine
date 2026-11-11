@@ -4,6 +4,12 @@ Welcome. This repository holds my data, software, and web projects. Browse the f
 
 ## Projects
 
+### Full-Stack Todo App (`todo-app/`)
+A full-stack task manager built with React and Node.js. It uses an Express REST API to create, update, and delete todos stored in MongoDB Atlas, with Mongoose for the database models.
+- React frontend built with Vite.
+- Express API with create, read, update, and delete routes.
+- MongoDB Atlas database connected through Mongoose schemas.
+
 ### Olist E-commerce Analytics Warehouse (`olist-warehouse/`)
 A containerized PostgreSQL data warehouse built from the Brazilian Olist e-commerce dataset (99,441 orders).
 - Docker Compose runs PostgreSQL 16 and Metabase.
@@ -21,10 +27,11 @@ A machine learning model that classifies customer reviews as positive, negative,
 A responsive, dark-themed site built with vanilla HTML, CSS, and JavaScript. It includes a file character scanner, a word highlighter, a persistent color voting chart, and live weather and movie search powered by free public APIs.
 
 ## Skills
-- **Data and databases:** PostgreSQL, SQL, Docker, ETL pipelines, data quality testing, star-schema design, Power BI, Metabase
-- **Programming:** Python, JavaScript, Java, Dart, HTML, CSS
+- **Data and databases:** PostgreSQL, SQL, Docker, ETL pipelines, data quality testing, star-schema design, Power BI, Metabase, MongoDB
+- **Web development:** React, Node.js, Express, HTML, CSS, JavaScript
+- **Programming:** Python, JavaScript, Java, Dart
 - **Machine learning:** text classification and sentiment analysis
-- **Tools:** Git, GitHub, Linux, Windows
+- **Tools:** Git, GitHub, Linux, Windows, Vite
 
 ## Contact
 - Email: mhd.sami0208@gmail.com
